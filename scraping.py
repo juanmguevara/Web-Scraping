@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import datetime as dt
 
-
 # Windows users
 executable_path = {'executable_path': 'C:/Users/juanm/OneDrive/Analysis Projects/Web Scraping/chromedriver_win32/chromedriver.exe'}
 
@@ -66,6 +65,174 @@ def featured_image(browser):
 
     return img_url
 
+def hemisphere_title_url(browser):
+
+    # --Visit the mars nasa hemisphere site for Cerberus Hemisphere Enhanced--
+    url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/cerberus_enhanced'
+    browser.visit(url)
+    
+    # Search the HTML Code
+    html = browser.html
+    cerberus_soup = BeautifulSoup(html, 'html.parser')
+
+    try:
+        # **Use the HTML to find the first `h2` tag and save the text as `cerberus_title`
+        cerberus_title = cerberus_soup.find("h2", class_='title').get_text()
+    except AttributeError:
+        return None
+
+    # Find and click the full image button
+    full_image_elem = browser.find_by_id('wide-image-toggle')
+    full_image_elem.click()
+
+    # Parse the resulting html with soup
+    html = browser.html
+    img_soup = BeautifulSoup(html, 'html.parser')
+
+    try:
+        # Find the relative image url
+        img_url_rel = img_soup.select_one('div.wide-image-wrapper img.wide-image').get("src")
+    except AttributeError:
+        return None
+
+    # **Use the base URL to create an absolute URL
+    img_url_cerberus = f'https://astrogeology.usgs.gov/{img_url_rel}'
+
+    # --Visit the mars nasa hemisphere site for Schiaparelli Hemisphere Enhanced--
+    url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/schiaparelli_enhanced'
+    browser.visit(url)
+
+    # Search the HTML Code
+    html = browser.html
+    Schiaparelli_soup = BeautifulSoup(html, 'html.parser')
+
+    try:
+        # **Use the HTML to find the first `h2` tag and save the text as `Schiaparelli_title`
+        Schiaparelli_title = Schiaparelli_soup.find("h2", class_='title').get_text()
+    except AttributeError:
+        return None
+
+    # Find and click the full image button
+    full_image_elem = browser.find_by_id('wide-image-toggle')
+    full_image_elem.click()
+
+    # Parse the resulting html with soup
+    html = browser.html
+    img_soup = BeautifulSoup(html, 'html.parser')
+
+    try:
+        # Find the relative image url
+        img_url_rel = img_soup.select_one('div.wide-image-wrapper img.wide-image').get("src")
+    except AttributeError:
+        return None
+
+    # **Use the base URL to create an absolute URL
+    img_url_Schiaparelli = f'https://astrogeology.usgs.gov/{img_url_rel}'
+
+    # --Visit the mars nasa hemisphere site for Syrtis Major Hemisphere Enhanced--
+    url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/syrtis_major_enhanced'
+    browser.visit(url)
+
+    # Search the HTML Code
+    html = browser.html
+    Syrtis_soup = BeautifulSoup(html, 'html.parser')
+    
+    try:
+        # **Use the HTML to find the first `h2` tag and save the text as `Syrtis_title`
+        Syrtis_title = Syrtis_soup.find("h2", class_='title').get_text()
+    except AttributeError:
+        return None
+    
+    # Find and click the full image button
+    full_image_elem = browser.find_by_id('wide-image-toggle')
+    full_image_elem.click()
+
+    # Parse the resulting html with soup
+    html = browser.html
+    img_soup = BeautifulSoup(html, 'html.parser')
+
+    try:
+        # Find the relative image url
+        img_url_rel = img_soup.select_one('div.wide-image-wrapper img.wide-image').get("src")
+    except AttributeError:
+        return None
+
+    # **Use the base URL to create an absolute URL
+    img_url_Syrtis = f'https://astrogeology.usgs.gov/{img_url_rel}'
+
+    # --Visit the mars nasa hemisphere site for Valles Marineris Hemisphere Enhanced--
+    url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/valles_marineris_enhanced'
+    browser.visit(url)
+
+    # Search the HTML Code
+    html = browser.html
+    Valles_soup = BeautifulSoup(html, 'html.parser')
+
+    try:
+        # **Use the HTML to find the first `h2` tag and save the text as `Valles_title`
+        Valles_title = Valles_soup.find("h2", class_='title').get_text()
+    except AttributeError:
+        return None
+
+    # Find and click the full image button
+    full_image_elem = browser.find_by_id('wide-image-toggle')
+    full_image_elem.click()
+
+    # Parse the resulting html with soup
+    html = browser.html
+    img_soup = BeautifulSoup(html, 'html.parser')
+
+    try:
+        # Find the relative image url
+        img_url_rel = img_soup.select_one('div.wide-image-wrapper img.wide-image').get("src")
+    except AttributeError:
+        return None
+
+    # **Use the base URL to create an absolute URL
+    img_url_Valles = f'https://astrogeology.usgs.gov/{img_url_rel}'
+
+    # Creating Python Dictionary for Hemisphere Data
+    hemispheredict = [
+        {
+            "title":cerberus_title,
+            "img_url":img_url_cerberus
+
+            #"title":"kitty1",
+            #"img_url":"https://live.staticflickr.com/3397/3551189653_501acccd41_b.jpg"
+        },
+        {
+            "title":Schiaparelli_title,
+            "img_url":img_url_Schiaparelli
+            
+            #"title":"kitty2",
+            #"img_url":"https://live.staticflickr.com/3397/3551189653_501acccd41_b.jpg"
+        },
+        {
+            "title":Syrtis_title,
+            "img_url":img_url_Syrtis
+            
+            #"title":"kitty3",
+            #"img_url":"https://live.staticflickr.com/3397/3551189653_501acccd41_b.jpg"
+        },
+        {
+            "title":Valles_title,
+            "img_url":img_url_Valles
+            
+            #"title":"kitty4",
+            #"img_url":"https://live.staticflickr.com/3397/3551189653_501acccd41_b.jpg"
+        }
+    ]
+
+    #Adding list as value
+    #hemispheredict["img_url"] = [
+    #    img_url_cerberus, img_url_Schiaparelli, img_url_Syrtis, img_url_Valles
+    #]
+    #hemispheredict["title"] = [
+    #    cerberus_title, Schiaparelli_title, Syrtis_title, Valles_title
+    #]    
+
+    return hemispheredict
+
 def mars_facts():
 
     try:
@@ -91,7 +258,8 @@ def scrape_all():
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "last_modified": dt.datetime.now()
+        "last_modified": dt.datetime.now(),
+        "hemisphere": hemisphere_title_url(browser)
     }
     return data
 
